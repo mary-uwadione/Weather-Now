@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import "./App.css";
+import logo from "../public/assets/images/logo.svg";
+import SearchInput from "./components/SearchInput";
+import Dashboard from "./components/Dashboard";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [lat, setLat] = useState(null);
+  const [long, setLong] = useState(null);
+  const [currentWeather, setCurrentWeather] = useState(null);
+  const [countryData, setCountryData] = useState({
+    state: "",
+    country: ""
+  });
+
+  useEffect(() => {
+    const fetchWeatherData = async () => {
+      const response = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`,
+      );
+      if (response.ok) {
+        const data = await response.json();
+        if (data) {
+          setCurrentWeather(data.current);
+        }
+        console.log(currentWeather);
+        console.log(data);
+      }
+    };
+
+    if (lat != null) {
+      fetchWeatherData();
+    }
+  }, [lat, long]);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <div className="logo">
+          <img src={logo} alt="logo" />
+          <h4 style={{}}>Weather Now</h4>
+        </div>
+      </header>
+      <SearchInput
+        setLat={setLat}
+        setLong={setLong}
+        countryData={countryData}
+        setCountryData={setCountryData}
+      />
+      <Dashboard
+        time={currentWeather?.time}
+        temp={currentWeather?.temperature_2m}
+        countryData={countryData}
+      />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
