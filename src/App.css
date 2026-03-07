@@ -124,6 +124,14 @@ form button {
   font-size: 0.7rem;
 }
 
+.loading {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: 20%;
+  right: 10%;
+}
+
 
 @media screen and (max-width: 768px)  {
   .cont form {

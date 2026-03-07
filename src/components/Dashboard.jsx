@@ -21,16 +21,20 @@ const Dashboard = ({
           </h3>
           <p>{date}</p>
         </div>
-        {/* <img src={} alt="" /> */}
-        <h4>
-          {currentWeather?.temperature_2m != undefined
-            ? `${currentWeather?.temperature_2m}${currentUnits?.temperature_2m}`
-            : ""}
-        </h4>
+        {isLoading ? (
+          <img src={loading} alt="" className="loading" />
+        ) : (
+          <h4>
+            {currentWeather?.temperature_2m != undefined
+              ? `${currentWeather?.temperature_2m}${currentUnits?.temperature_2m}`
+              : ""}
+          </h4>
+        )}
       </div>
 
       <div className="row">
         <WeatherCard
+          isLoading={isLoading}
           property={"Feels like"}
           value={
             currentWeather?.temperature_2m != undefined
@@ -39,6 +43,7 @@ const Dashboard = ({
           }
         />
         <WeatherCard
+         isLoading={isLoading}
           property={"Wind Speed"}
           value={
             currentWeather?.wind_speed_10m != undefined
@@ -49,6 +54,7 @@ const Dashboard = ({
           }
         />
         <WeatherCard
+         isLoading={isLoading}
           property={"Humidity"}
           value={
             currentWeather?.relative_humidity_2m != undefined
@@ -59,6 +65,7 @@ const Dashboard = ({
           }
         />
         <WeatherCard
+         isLoading={isLoading}
           property={"Precipitation"}
           value={
             currentWeather?.precipitation != undefined
