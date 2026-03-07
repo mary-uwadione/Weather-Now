@@ -6,8 +6,6 @@ Weather Now is a weather dashboard application built with React that allows user
 
 This project was developed as part of the ALX Frontend Engineering Capstone Project. The goal is to demonstrate practical frontend development skills including API integration, responsive interface design, state management, and application deployment.
 
----
-
 Features
 
 City Search
@@ -39,7 +37,6 @@ The application refreshes weather data automatically at regular intervals to ens
 
 Recent city searches are stored in the browser’s local storage so users can easily access previously searched locations.
 
----
 
 Technologies Used
 
@@ -52,55 +49,6 @@ The project was built using the following technologies:
 * Vite
 * OpenWeatherMap API
 * Git and GitHub
-
-
-Project Structure
-
-```
-weather-now
-
-src
-│
-├── components
-│   ├── SearchBar.jsx
-│   ├── WeatherCard.jsx
-│   ├── ErrorMessage.jsx
-│   └── RecentSearches.jsx
-│
-├── App.jsx
-├── main.jsx
-├── styles.css
-
-index.html
-package.json
-vite.config.js
-README.md
-```
-
-
-Installation and Setup
-
-Follow the steps below to run the project locally.
-
-### Clone the repository
-
-```
-git clone https://github.com/mary-uwadione/weather-now.git
-```
-
-Navigate into the project directory
-
-```
-cd weather-now
-```
-
-Install project dependencies
-
-```
-npm install
-```
-
-Start the development server
 
 
 API Configuration
