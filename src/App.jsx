@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import logo from "../public/assets/images/logo.svg";
 import SearchInput from "./components/SearchInput";
@@ -9,23 +8,26 @@ function App() {
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
   const [currentWeather, setCurrentWeather] = useState(null);
+  const [currentUnits, setCurrentUnits] = useState(null);
+   const [isLoading, setIsLoading] = useState(false);
   const [countryData, setCountryData] = useState({
     state: "",
-    country: ""
+    country: "",
   });
 
   useEffect(() => {
     const fetchWeatherData = async () => {
       const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`,
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,wind_speed_10m,relative_humidity_2m,precipitation&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`,
       );
+      setIsLoading(true)
       if (response.ok) {
         const data = await response.json();
         if (data) {
           setCurrentWeather(data.current);
+          setCurrentUnits(data.current_units);
         }
-        console.log(currentWeather);
-        console.log(data);
+        setIsLoading(false)
       }
     };
 
@@ -39,7 +41,6 @@ function App() {
       <header>
         <div className="logo">
           <img src={logo} alt="logo" />
-          <h4 style={{}}>Weather Now</h4>
         </div>
       </header>
       <SearchInput
@@ -49,9 +50,10 @@ function App() {
         setCountryData={setCountryData}
       />
       <Dashboard
-        time={currentWeather?.time}
-        temp={currentWeather?.temperature_2m}
+        currentWeather={currentWeather}
         countryData={countryData}
+        currentUnits={currentUnits}
+        isLoading={isLoading}
       />
     </>
   );

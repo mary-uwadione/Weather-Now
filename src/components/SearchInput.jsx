@@ -1,4 +1,5 @@
 import { useState } from "react";
+import searchIcon from "../../public/assets/images/icon-search.svg";
 
 const SearchInput = ({ setLat, setLong, countryData, setCountryData }) => {
   const appId = import.meta.env.VITE_PUBLIC_OPEN_API_KEY;
@@ -27,8 +28,7 @@ const SearchInput = ({ setLat, setLong, countryData, setCountryData }) => {
         }
       }
     } catch (e) {
-      console.log(e.message);
-      alert("This place does not exist!");
+      alert("There's probably a network issue!");
     }
   };
   return (
@@ -37,7 +37,7 @@ const SearchInput = ({ setLat, setLong, countryData, setCountryData }) => {
       <form onSubmit={searchCountry}>
         <input
           type="text"
-          placeholder="Search for a place"
+          placeholder="Search for a place.."
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
