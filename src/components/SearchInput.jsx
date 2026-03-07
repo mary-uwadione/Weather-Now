@@ -4,14 +4,17 @@ import searchIcon from "../../public/assets/images/icon-search.svg";
 const SearchInput = ({ setLat, setLong, countryData, setCountryData }) => {
   const appId = import.meta.env.VITE_PUBLIC_OPEN_API_KEY;
   const [text, setText] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
+  console.log(isLoading);
   const searchCountry = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       const response = await fetch(
         `https://api.openweathermap.org/geo/1.0/direct?q=${text}&appid=${appId}`,
       );
       if (response.ok) {
+        setIsLoading(false);
         const data = await response.json();
         if (data) {
           if (data.length != 0) {
@@ -28,6 +31,7 @@ const SearchInput = ({ setLat, setLong, countryData, setCountryData }) => {
         }
       }
     } catch (e) {
+      setIsLoading(false);
       alert("There's probably a network issue!");
     }
   };
@@ -41,7 +45,9 @@ const SearchInput = ({ setLat, setLong, countryData, setCountryData }) => {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <button type="submit">Search</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Loading..." : "Search"}
+        </button>
       </form>
     </div>
   );

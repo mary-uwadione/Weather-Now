@@ -39,7 +39,7 @@ const Dashboard = ({
           }
         />
         <WeatherCard
-          property={"Wind"}
+          property={"Wind Speed"}
           value={
             currentWeather?.wind_speed_10m != undefined
               ? `${currentWeather?.wind_speed_10m}${
