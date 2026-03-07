@@ -5,7 +5,6 @@ const SearchInput = ({ setLat, setLong, countryData, setCountryData }) => {
   const appId = import.meta.env.VITE_PUBLIC_OPEN_API_KEY;
   const [text, setText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  console.log(isLoading);
   const searchCountry = async (e) => {
     setIsLoading(true);
     e.preventDefault();
