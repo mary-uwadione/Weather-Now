@@ -13,18 +13,34 @@ body {
   font-style: normal;
 }
 
+/* ── HEADER ── */
 header {
   display: flex;
-  flex-direction: row;
-  width: 15%;
-  margin-left: 5%;
-  margin-top: 3%;
+  align-items: center;
+  padding: 16px 5%;
 }
 
 header .logo {
-  width: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+header .logo img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+header .logo span {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+/* ── SEARCH ── */
 .cont {
   display: flex;
   flex-direction: column;
@@ -32,10 +48,16 @@ header .logo {
   align-items: center;
 }
 
+.cont h3 {
+  font-size: 2.3em;
+  text-align: center;
+}
+
 .cont form {
   margin: 30px auto;
   width: 35%;
   height: 40px;
+  display: flex;
 }
 
 form input {
@@ -43,116 +65,283 @@ form input {
   height: 100%;
   background-color: hsl(243, 23%, 30%);
   color: white;
-  border-radius: 5%;
+  border-radius: 5px;
   border: none;
-  padding-left: 5px;
+  padding-left: 10px;
+  outline: none;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 form input::placeholder {
-  padding: 10px;
-  margin: auto;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 form button {
   height: 100%;
-  border-radius: 7%;
+  border-radius: 5px;
   margin-left: 2%;
   cursor: pointer;
-  padding: 10px;
+  padding: 0 16px;
   color: white;
   background-color: hsl(233, 67%, 56%);
   border: none;
+  font-family: "Josefin Sans", sans-serif;
+  white-space: nowrap;
 }
 
-.cont h3 {
-  margin: auto;
-  font-size: 2.3em;
+form button:hover {
+  background-color: hsl(233, 67%, 45%);
 }
 
+/* ── ERRORS ── */
+.error-box {
+  max-width: 500px;
+  margin: 10px auto;
+  background: rgba(220, 50, 50, 0.15);
+  border: 1px solid rgba(220, 50, 50, 0.4);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #ff8a8a;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-error {
+  color: #ff8a8a;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* ── RECENT SEARCHES ── */
+.recent-searches {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.recent-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.recent-chip {
+  background: hsl(243, 23%, 30%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  border-radius: 50px;
+  padding: 4px 14px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  font-family: "Josefin Sans", sans-serif;
+  transition: background 0.2s;
+}
+
+.recent-chip:hover {
+  background: hsl(233, 67%, 56%);
+}
+
+/* ── CARD CONTAINER ── */
+.card-cont {
+  padding: 20px 0;
+}
+
+/* ── MAIN WEATHER CARD ── */
 .card {
-  border: 1px solid black;
-  border-radius: 3%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
   width: 70%;
-  height: 200px;
+  min-height: 160px;
   margin-left: 4%;
-  background-image: url("../public/assets/images/bg-today-large.svg");
-  background-size: cover;
+  background-color: hsl(243, 23%, 20%);
   color: white;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  padding: 24px 30px;
+}
+
+.country-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.condition-label {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── TEMPERATURE BLOCK ── */
+.temp-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── MAIN WEATHER ICON ── */
+.weather-icon-main {
+  color: hsl(43, 96%, 58%);
+  filter: drop-shadow(0 4px 8px rgba(255, 200, 0, 0.3));
 }
 
 .card h4 {
-  position: relative;
-  top: 30%;
-  right: 5%;
   font-size: 2.5rem;
   font-weight: 600;
   font-style: italic;
 }
 
-.card .country-details {
-  position: relative;
-  top: 30%;
-  left: 3%;
+/* ── SPINNER ── */
+.spinner {
+  font-size: 2rem;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  color: hsl(233, 67%, 56%);
 }
 
-/** Weather Card **/
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 
+/* ── REFRESH ROW ── */
+.refresh-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 4%;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+.refresh-btn {
+  background: hsl(243, 23%, 30%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 8px;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.refresh-btn:hover { background: hsl(233, 67%, 56%); }
+.refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.auto-update-note {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ── PROPERTY CARDS ── */
 .row {
   display: flex;
   flex-wrap: wrap;
   width: 70%;
   margin-left: 4%;
   margin-top: 1.5%;
+  gap: 12px;
 }
 
 .property-card {
-  border: 1px solid black;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   background-color: hsl(243, 23%, 30%);
-  border-radius: 7%;
-  margin-right: 1em;
+  border-radius: 12px;
   padding: 1em;
-}
-
-.property-card p {
-  margin: 0.5em;
+  min-width: 130px;
 }
 
 .property-card .property {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
 }
 
-.loading {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  top: 20%;
-  right: 10%;
+.property-card .value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
 }
 
+/* ── SHIMMER LOADING ── */
+.card-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0;
+}
 
-@media screen and (max-width: 768px)  {
+.shimmer {
+  height: 14px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    hsl(243, 23%, 35%) 25%,
+    hsl(243, 23%, 45%) 50%,
+    hsl(243, 23%, 35%) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  width: 80%;
+}
+
+.shimmer-short { width: 50%; }
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── RESPONSIVE ── */
+@media screen and (max-width: 768px) {
+  header { padding: 16px 4%; }
+
   .cont form {
-    width: 100%;
-    display: block;
-    margin-left: 2%;
+    width: 90%;
+    margin-left: 0;
   }
+
   .cont h3 {
     font-size: 1.7rem;
     margin-top: 5%;
-    margin-left: 3%;
-    margin-right: 3%;
+    padding: 0 5%;
   }
+
   .card {
-    width: 90%;
+    width: 92%;
+    margin-left: 4%;
+    padding: 16px;
   }
+
+  .card h4 { font-size: 1.8rem; }
+
   .row {
-    width: 100%;
+    width: 92%;
+    margin-left: 4%;
     margin-top: 5%;
   }
+
   .property-card {
-    margin: 2%;
+    flex: 1 1 calc(50% - 12px);
   }
 }
