@@ -13,13 +13,11 @@ function App() {
   const [error, setError] = useState("");
   const [countryData, setCountryData] = useState({ state: "", country: "" });
 
-  // Load recent searches from localStorage
   const [recentSearches, setRecentSearches] = useState(() => {
     try { return JSON.parse(localStorage.getItem("recent_searches") || "[]"); }
     catch { return []; }
   });
 
-  // useCallback so fetchWeatherData can be reused for auto-refresh
   const fetchWeatherData = useCallback(async () => {
     if (lat == null) return;
     setIsLoading(true);
@@ -41,7 +39,7 @@ function App() {
     }
   }, [lat, long]);
 
-  // Fetch when lat/long changes
+  // Fetch when coordinates change
   useEffect(() => {
     if (lat != null) fetchWeatherData();
   }, [lat, long, fetchWeatherData]);
@@ -49,13 +47,10 @@ function App() {
   // Auto-refresh every 5 minutes
   useEffect(() => {
     if (lat == null) return;
-    const interval = setInterval(() => {
-      fetchWeatherData();
-    }, 5 * 60 * 1000);
-    return () => clearInterval(interval); // cleanup on unmount
+    const interval = setInterval(() => fetchWeatherData(), 5 * 60 * 1000);
+    return () => clearInterval(interval);
   }, [lat, fetchWeatherData]);
 
-  // Save city to recent searches
   const saveRecentSearch = (cityName) => {
     setRecentSearches((prev) => {
       const updated = [
@@ -73,7 +68,6 @@ function App() {
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         const { latitude, longitude } = pos.coords;
-        // Reverse geocode to get city name
         try {
           const res = await fetch(
             `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
@@ -95,18 +89,17 @@ function App() {
         setLat(latitude);
         setLong(longitude);
       },
-      () => {} // silently ignore if user denies
+      () => {}
     );
   }, []);
 
   return (
     <>
       <header>
-        <div className="logo">
-          <img src={logo} alt="logo" />
-          <span>Weather Now</span>
-        </div>
-      </header>
+  <div className="logo">
+    <img src={logo} alt="Weather Now logo" />
+  </div>
+</header>
 
       <SearchInput
         setLat={setLat}
@@ -117,7 +110,6 @@ function App() {
         saveRecentSearch={saveRecentSearch}
       />
 
-      {/* Error message shown on screen instead of alert() */}
       {error && (
         <div className="error-box">
           <span>⚠️</span>
